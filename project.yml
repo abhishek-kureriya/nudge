@@ -1,0 +1,80 @@
+name: NudgeLife
+options:
+  bundleIdPrefix: com.nudgelife
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  xcodeVersion: "2700"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_STRICT_CONCURRENCY: complete
+
+targets:
+  NudgeLife:
+    type: application
+    platform: iOS
+    sources:
+      - NudgeLife
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nudgelife.app
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+
+  NudgeLifeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - NudgeLifeTests
+    dependencies:
+      - target: NudgeLife
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nudgelife.app.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/NudgeLife.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NudgeLife"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+
+  NudgeLifeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - NudgeLifeUITests
+    dependencies:
+      - target: NudgeLife
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nudgelife.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1"
+
+schemes:
+  NudgeLife:
+    build:
+      targets:
+        NudgeLife: all
+        NudgeLifeTests:
+          - test
+        NudgeLifeUITests:
+          - test
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - NudgeLifeTests
+        - NudgeLifeUITests
+    archive:
+      config: Release
